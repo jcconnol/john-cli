@@ -1,0 +1,25 @@
+#!/usr/bin/env python
+
+import argparse
+
+def greet(name):
+    print(f'Hello, {name}!')
+
+def farewell(name):
+    print(f'Goodbye, {name}!')
+
+def main():
+    parser = argparse.ArgumentParser(description='John\'s custom CLI')
+    parser.add_argument('--farewell', action='store_true', help='Say goodbye instead of hello')
+    parser.add_argument('name', help='Your name')
+    parser.add_argument('--farewell', action='store_true', help='Say goodbye instead of hello')
+
+    args = parser.parse_args()
+
+    if args.farewell:
+        farewell(args.name)
+    else:
+        greet(args.name)
+
+if __name__ == '__main__':
+    main()
