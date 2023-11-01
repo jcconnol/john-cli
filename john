@@ -1,53 +1,48 @@
-#!/usr/bin/env python
 
-import argparse
+#!/bin/bash
 
-def display_help():
-    print(f'Hello, do you want help?')
+script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-def commit(parser):
-    print("Performing a commit option.")
-    args, remaining_args = parser.parse_known_args()
-    print(remaining_args)
+source $script_dir/reaction/reaction.sh
+source $script_dir/search/search.sh
+source $script_dir/commit/commit.sh
 
-def farewell(name):
-    print(f'Goodbye, {name}!')
+# Define the list of valid options
+valid_options=("reaction" "search" "commit")
 
-def ask_chatgpt(ask):
-    print(f'ask this question {ask}.')
+# Check if an option is provided as an argument
+if [ -z "$1" ]; then
+    echo "Usage: $0 <option>"
+    echo "Valid options are: ${valid_options[*]}"
+    exit 1
+fi
 
-def main():
+if [ "$1" == "reaction" ]; then
+    reaction $2 $3
+    exit 1
+elif [ "$1" == "search" ]; then
+    search $2
+    exit 1
+elif [ "$1" == "commit" ]; then
+    m_option=""
 
-    option_list = [
-        'chatgpt',
-        'search',
-        'farewell',
-        'commit'
-    ]
+    for arg in "$@"; do
+        if [[ "$arg" == "-m"* ]]; then
+            # Check if the argument starts with "-m"
+            # If it does, set m_option to the value following -m
+            m_option="${arg#-m}"
+        fi
+    done
 
-    option_list_help_message = f'Specify an option {option_list}'
-
-    parser = argparse.ArgumentParser(description='John\'s Custom CLI')
-
-    parser.add_argument('--m', help='Add commit message.')
-    parser.add_argument('option', choices=option_list, help=f'Specify option {option_list}')
-
-    args = parser.parse_args()
-
-    if args.option == 'commit':
-        if args.m == None:
-            print("A message (--m) is required for commits.")
-        else:
-            commit(parser)
-
-    elif args.option == 'farewell':
-        print("Performing a farewell option.")
-
-
-if __name__ == '__main__':
-    try:
-        main()
-    except SystemExit:
-        # Define your custom error message
-        custom_error_message = "Your custom error message here."
-        print(custom_error_message)
+    if [ -n "$m_option" ]; then
+        echo "here"
+        echo "please provide commit message (-m)"
+        exit 0
+    else
+        commit $m_option
+    fi
+else
+    echo "Invalid option: '$1'"
+    echo "Valid options are: ${valid_options[*]}"
+    exit 1
+fi
