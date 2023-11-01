@@ -1,6 +1,6 @@
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-source $script_dir/commit/gitlab_mr.sh
+source $script_dir/gitlab_mr.sh
 
 commit() {
     echo "working on committing"
