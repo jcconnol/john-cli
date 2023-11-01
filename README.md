@@ -13,6 +13,10 @@ Also, create a gitlab api token and set the variable "JOHN_GITLAB_TOKEN" in your
 export JOHN_CLI_GITLAB_TOKEN=<some_api_token>
 ```
 
+Also, set this git configuration so that the branch can be auto created:
+```bash
+git config --global push.default current
+```
 ## Running
 
 Run this by running the command `john` followed by an allowed command.
