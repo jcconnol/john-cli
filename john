@@ -5,7 +5,8 @@ script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 source $script_dir/reaction/reaction.sh
 source $script_dir/search/search.sh
-source $script_dir/commit/commit.sh
+source $script_dir/random/random.sh
+source $script_dir/commits/commits.sh
 
 # Define the list of valid options
 valid_options=("reaction" "search" "commit")
@@ -23,6 +24,9 @@ if [ "$1" == "reaction" ]; then
 elif [ "$1" == "search" ]; then
     search $2
     exit 1
+elif [ "$1" == "random" ]; then
+    random_picking $2
+    exit 1
 elif [ "$1" == "commit" ]; then
     m_option=""
 
@@ -35,7 +39,6 @@ elif [ "$1" == "commit" ]; then
     done
 
     if [ -n "$m_option" ]; then
-        echo "here"
         echo "please provide commit message (-m)"
         exit 0
     else
