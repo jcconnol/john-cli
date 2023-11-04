@@ -26,7 +26,6 @@ append_to_file() {
     fi
 }
 
-
 needed_tokens_json=""
 
 if [ -n "$JOHN_CLI_API_TOKEN" ]; then
@@ -37,6 +36,8 @@ else
 fi
 
 file_output_string='### Auto generated for John CLI ###\n'
+file_output_string+="\nexport PATH=\"\$PATH:$(pwd)\"\n"
+
 
 for item in $(echo "$needed_tokens_json" | jq -c '.params[]'); do
     param_name=$(echo "$item" | jq -r '.name')
