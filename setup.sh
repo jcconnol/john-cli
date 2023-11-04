@@ -43,7 +43,7 @@ for item in $(echo "$needed_tokens_json" | jq -c '.params[]'); do
     param_value=$(echo "$item" | jq -r '.value')
 
     file_output_string+="\n"
-    file_output_string+="export ${param_name}=${param_value}"
+    file_output_string+="export ${param_name}=\"${param_value}\""
     file_output_string+="\n"
 done
 
