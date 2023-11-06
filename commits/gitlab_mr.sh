@@ -7,7 +7,7 @@ make_gitlab_mr() {
     project_data=$(curl --header "PRIVATE-TOKEN: $access_token" "$project_base_url/api/v4/projects?search=$current_repo_name")
     project_id=$( $project_data | jq -r '.[0].id')
 
-    access_token="$JOHN_GITLAB_TOKEN"
+    access_token="$JOHN_CLI_GITLAB_TOKEN"
 
     source_branch="feature_branch"
     target_branch="master"
